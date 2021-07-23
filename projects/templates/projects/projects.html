@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for project in projects %}
+        <tr>
+            <td><a href="/project/{{project.id}}">{{project.title}}</a></td>
+            <td>{{project.created}}</td>        
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
