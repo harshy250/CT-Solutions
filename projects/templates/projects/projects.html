@@ -5,7 +5,9 @@
 <table>
     <thead>
         <tr>
-            <th>Title</th>
+            <th>Project</th>
+            <th>Votes</th>
+            <th>Positive Votes</th>
             <th>Created</th>
         </tr>
     </thead>
@@ -14,6 +16,8 @@
         {% for project in projects %}
         <tr>
             <td><a href="/project/{{project.id}}">{{project.title}}</a></td>
+            <td>{{project.vote_total}}</td>
+            <td>{{project.vote_ratio}}%</td>
             <td>{{project.created}}</td>        
         </tr>
         {% endfor %}
