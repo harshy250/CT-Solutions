@@ -1,9 +1,10 @@
 from django.db import models
+from users.models import Profile
 import uuid
 
 
 class Project(models.Model):
-    #owner
+    owner = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     feature_image = models.ImageField(
