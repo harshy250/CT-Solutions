@@ -16,11 +16,11 @@ def loginUser(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        print(username, password)
+        # print(username, password)
         try:
             user = User.objects.get(username = username)
         except:
-            messages.error(request, "Username doesnot exists")
+            messages.error(request, "Username doesnot exist!")
 
         user = authenticate(request, username=username, password=password)
 
@@ -28,14 +28,14 @@ def loginUser(request):
             login(request, user)
             return redirect('profiles')
         else:
-            messages.error(request, 'Username OR password is incorrect')
+            messages.error(request, 'Username OR password is incorrect!')
 
 
     return render(request, 'users/login_register.html', {'page':page})
 
 def logoutUser(request):
     logout(request)
-    messages.error(request, 'Logged out Successfully')
+    messages.info(request, 'User successfully logged out!')
     return redirect('login')
 
 def registerUser(request):
