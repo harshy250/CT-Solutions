@@ -4,8 +4,11 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Profile
+from .forms import CustomUserCreationForm
 
 def loginUser(request):
+
+    page = 'login'
 
     if request.user.is_authenticated:
         return redirect('profiles')
@@ -28,12 +31,34 @@ def loginUser(request):
             messages.error(request, 'Username OR password is incorrect')
 
 
-    return render(request, 'users/login_register.html')
+    return render(request, 'users/login_register.html', {'page':page})
 
 def logoutUser(request):
     logout(request)
     messages.error(request, 'Logged out Successfully')
     return redirect('login')
+
+def registerUser(request):
+    page = 'register'
+    form = CustomUserCreationForm()
+
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+
+            messages.success(request, 'Successfully Registered!')
+
+            login(request, user)
+            return redirect('profiles')
+        
+        else:
+            messages.error(request, 'Registration Failed!')
+
+    context = {'page':page, 'form':form}
+    return render(request, 'users/login_register.html', context)
 
 
 def profiles(request):
